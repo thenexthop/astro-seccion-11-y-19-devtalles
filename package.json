@@ -4,13 +4,17 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "start": "node ./dist/server/entry.mjs",
+    "build": "pnpm run prisma:generate && astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/node": "^9.5.1",
+    "@astrojs/rss": "^4.0.14",
     "@astrojs/sitemap": "^3.6.1",
     "@astrojs/vue": "^5.1.4",
     "@prisma/adapter-neon": "^7.2.0",
@@ -21,7 +25,9 @@
     "canvas-confetti": "^1.9.4",
     "dotenv": "^17.2.3",
     "lodash.debounce": "^4.0.8",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
     "vue": "^3.5.26"
   },
   "devDependencies": {
