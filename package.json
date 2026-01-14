@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "node ./dist/server/entry.mjs",
+    "start": "HOST=0.0.0.0 PORT=5000 node ./dist/server/entry.mjs",
     "build": "pnpm run prisma:generate && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
