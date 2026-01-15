@@ -49,7 +49,7 @@
 
         likesClicked.value > 0 && await actions.updatePostLikes({
             postId: props.postId,
-            likes: likesClicked.value
+            increment: likesClicked.value
         })
 
         likesClicked.value = 0
