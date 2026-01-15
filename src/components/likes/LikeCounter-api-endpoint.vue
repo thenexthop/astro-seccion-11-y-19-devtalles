@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts" setup>
-    import { actions } from 'astro:actions'
     import { ref, watch } from 'vue'
     import confetti from 'canvas-confetti'
     import debounce from 'lodash.debounce'
@@ -44,28 +43,25 @@
     const likesClicked = ref(0)
     const isLoading = ref(true)
 
-    watch(totalLikes, debounce(async () => {
+    watch(totalLikes, debounce(() => {
+        console.log("Total de Likes: ", totalLikes.value)
         console.log("Veces Clicked: ", likesClicked.value)
 
-        likesClicked.value > 0 && await actions.updatePostLikes({
-            postId: props.postId,
-            likes: likesClicked.value
+        fetch(`/api/posts/likes/${props.postId}`, {
+            method: "PUT",
+            body: JSON.stringify({ likes: likesClicked.value })
         })
 
         likesClicked.value = 0
-
     }, 500))
 
     const getLikes = async () => {
+        const response = await fetch(`/api/posts/likes/${props.postId}`)
         
-        const { data, error } = await actions.getPostLikes(props.postId)
-        
-        if (error) {
-            console.log(error)
-            return
-        }
-            
-        totalLikes.value = data.likes ?? 0
+        if (!response.ok) return
+
+        const data = await response.json()
+        totalLikes.value = data.likes
         isLoading.value = false
     }
 
